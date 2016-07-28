@@ -1,0 +1,48 @@
+--------------------------------
+	Author: Chungyuen Li
+	Contact: lizoyu1@gmail.com
+--------------------------------
+
+This program is the final individual project in class Principles of Microcontroller.
+
+It's a 4-number password lock on experimental platform TMD-2 using 89C51 and written in Assembly
+language. TMD-2 has a numberpad with 0~9 and a~f, and additional buttons for external interrupt.
+
+Realized functions is as follows:
+	1. Being able to insert 4 number at most as password;
+	2. Backspace using 'b', confirm using 'a';
+	3. Keep the inserion in secret, only showing '8';
+	4. Show 'PC' when correct and 'PE' when wrong;
+	5. Being able to change the password and need to verify previous password.
+
+Experimental environment:
+	1. TMD-2 experimental platform with numberpad;
+	2. Windows XP and Windows 8;
+	3. Keil C51 uVision 2 and uVision 4;
+	4. Flash Magic;
+	5. Altium Designer 14.
+	
+The working status is controlled by several flags, including:
+	1. Flag1: Restriction of confirm button 'a' 
+	- Forbid confirming when number is not enough to be varified.
+	
+	2. Flag2: Status of confirm button 'a'
+	- Determined if the program can get into the sections of verification.
+	
+	3. Flag3: Reconfirmation of changing password
+	- Before changing password, we have to insert one correct password. When it's correct, Flag3
+	will be activated, that we can change password now.
+	
+	4. Flag4: Confirmation of changeing password
+	- After pushing the button for external interrupt, flag4 is activated to show that next inserting
+	number is to verify for changing password.
+
+The whole program simply goes like this:
+	1. Intialization
+	2. Detect insert
+		1) 'a': check Flag1 and Flag2;
+		2) 'b': delete one number;
+		3) others: show number on LED.
+	3. Determine to go into several status
+		1) Flag2 for verification;
+		2) Flag4 for changing password, with Flag3.
